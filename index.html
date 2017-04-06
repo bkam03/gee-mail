@@ -4,15 +4,39 @@
 		<link href="css/style.css" rel="stylesheet" media="screen">
     <script>
       window.onload = function(){
-        // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
-        // We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
+        
+        console.log(geemails); //whats in geemails?
+
+        function newMessage() {  //generate new email?
+          var message = getNewMessage(); //generate email
+          console.log("message",message); //check contents
+          geemails.push(message); //add new email to end of geemails array
+          console.log(geemails.length); //how many emails now?
+        }
+        //setInterval(newMessage,1000);
         
       };
     </script>
 	</head>
 	<body>
 		<div class="container" id="main">
-			Build Me!
+      <header>
+        <div id="title">
+          <h1> Gee-Mail</h1>
+        </div>
+      </header>
+      
+      <div id="mailDisplay">
+        <p>the arena</p>
+      </div>
+      <div id="messageDisplay">
+        <p>the message</p>
+      </div>
+      
+      <footer>
+        <p>the footer</p>  
+      </footer>
 		</div>
 	</body>
 </html>
+
