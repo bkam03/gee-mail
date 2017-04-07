@@ -5,7 +5,40 @@
     <script>
       window.onload = function(){
         
+
+        function loadPage(array) {
+          for(var i=0; i<geemails.length;i++) {
+            //create email line
+            var message = document.createElement("div");
+            message.className = "email";
+            //create sender div of email
+            var sender = emailSection("sender", array[i].sender);
+            message.appendChild(sender);
+            //create subject div of email
+            var subject = emailSection("subject", array[i].subject);
+            message.appendChild(subject);            
+            //create date div of email
+            var date = emailSection("date", array[i].date);
+            message.appendChild(date);
+
+            //append message to mailDisplay, on webpage
+            mailDisplay.appendChild(message);
+            console.log(message);
+          }
+        }
+
+        function emailSection(string, content) {  //generate sections of the email
+          var section = document.createElement("div");
+          section.className = string;
+          console.log(content);
+          section.innerHTML = content;
+          return section;
+        }
+
         console.log(geemails); //whats in geemails?
+        loadPage(geemails);
+
+
 
         function newMessage() {  //generate new email?
           var message = getNewMessage(); //generate email
