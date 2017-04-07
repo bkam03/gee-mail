@@ -7,11 +7,24 @@
 
         function loadPage(array) {
           for(var i=0; i<geemails.length;i++) {//go through email array
-            outputEmail(array[i]);  ////create email line
+            outputEmail(array[i],i);  ////create email line
+
+            //back button functionality to email window
+            var back = document.getElementById("backButton");
+            back.addEventListener("click",showList);
           }
         }
+        function showList() {
+          //hide email window
+          var messageShow = document.getElementById("messageDisplay");
+          messageShow.style.display = "none"; 
+          //show email list
+          var messageList = document.getElementById("mailDisplay");
+          messageList.style.display = "flex";
 
-        function outputEmail(mailObj) { //put together email, put on display
+        }
+
+        function outputEmail(mailObj, arrayId) { //put together email, put on display
           var message = document.createElement("div");
           message.className = "email";
           var sender = emailSection("sender", mailObj);
@@ -20,6 +33,13 @@
           message.appendChild(subject);            
           var date = emailSection("date", mailObj);
           message.appendChild(date);
+
+          var id = document.createElement("div");
+          id.className = "arrayId";
+          id.innerHTML = arrayId;
+          message.appendChild(id);
+
+          message.addEventListener("click",showMessage);
           //append message to mailDisplay, on webpage
           mailDisplay.appendChild(message);
         }
@@ -31,20 +51,43 @@
           return section;
         }
 
+        function showMessage() { //display email body when clicked
+          //show email in main window, hide email list
+          var messageWindow =document.getElementById("messageDisplay");
+          var messageList =document.getElementById("mailDisplay");
+          
+          messageWindow.style.display = "flex";
+          messageList.style.display = "none";
+
+          //get info to display email
+          var subject = this.querySelector(".subject").innerHTML;
+          var sender = this.querySelector(".sender").innerHTML;
+          var date = this.querySelector(".date").innerHTML;
+          var bodyId = this.querySelector(".arrayId").innerHTML;
+          var body = geemails[bodyId].body;
+
+          //display email in appropriate window
+          document.getElementById("emailSubject").innerHTML = subject;
+          document.getElementById("emailSender").innerHTML = sender;
+          document.getElementById("emailDate").innerHTML = date;
+          document.getElementById("emailContents").innerHTML = body;
+        }
+
+
+        function newMessage() {  //generate new email?
+          var message = getNewMessage(); //generate email
+          //console.log("message",message); //check contents
+          geemails.push(message); //add new email to end of geemails array
+          outputEmail(message,(geemails.length - 1));
+          //console.log(geemails.length); //how many emails now?
+        }
+
+
+
 //functions being called
         loadPage(geemails);
         setInterval(newMessage,12119); //generate new email at set intervals
 
-
-        
-        function newMessage() {  //generate new email?
-          var message = getNewMessage(); //generate email
-          console.log("message",message); //check contents
-          geemails.push(message); //add new email to end of geemails array
-          outputEmail(message);
-          //console.log(geemails.length); //how many emails now?
-        }
-        //setInterval(newMessage,1000);
         
       };
     </script>
@@ -61,7 +104,18 @@
         <p>the arena</p>
       </div>
       <div id="messageDisplay">
-        <p>the message</p>
+        <div id="emailHeader">
+          <img src="" alt="back" id="backButton">
+          <p id="emailSubject">you listen</p>
+        </div>
+        <div id="emailInfo">
+          <div id="emailSender">me</div>
+          <div id="emailDate">4/7/2017</div>
+        </div>
+        <div id="emailContents">
+          
+        </div>
+
       </div>
       
       <footer>
