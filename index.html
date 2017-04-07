@@ -12,6 +12,8 @@
             //back button functionality to email window
             var back = document.getElementById("backButton");
             back.addEventListener("click",showList);
+
+            document.getElementById("inboxCounter").innerHTML = geemails.length;
           }
         }
         function showList() {
@@ -82,12 +84,23 @@
           //console.log(geemails.length); //how many emails now?
         }
 
+        function refreshInbox() {
+          var inboxCounter = document.getElementById("inboxCounter");
+          console.log(typeof inboxCounter);
+          if(inboxCounter.innerHTML !== geemails.length) {
+            inboxCounter.innerHTML = geemails.length;
+            console.log("different");
+          } else {
+            console.log("same");
+          }
+        }
+
 
 
 //functions being called
         loadPage(geemails);
-        setInterval(newMessage,12119); //generate new email at set intervals
-
+        setInterval(newMessage,6000); //generate new email at set intervals
+        setInterval(refreshInbox,1000); //refresh inbox counter
         
       };
     </script>
@@ -98,10 +111,12 @@
         <div id="title">
           <h1> Gee-Mail</h1>
         </div>
+        <div id="inboxCounter">
+          
+        </div>
       </header>
       
       <div id="mailDisplay">
-        <p>the arena</p>
       </div>
       <div id="messageDisplay">
         <div id="emailHeader">
