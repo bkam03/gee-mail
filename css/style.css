@@ -17,6 +17,7 @@ body {
 
 .email {
   display: flex;
+  border: 1px solid black;
 }
 
 #messageDisplay {
