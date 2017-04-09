@@ -32,9 +32,13 @@
           var sender = emailSection("sender", mailObj);
           message.appendChild(sender);
           var subject = emailSection("subject", mailObj);
-          message.appendChild(subject);            
-          var date = emailSection("date", mailObj);
-          message.appendChild(date);
+          message.appendChild(subject);
+
+          var dateFormatted = formatDate(mailObj.date);
+          var dateDiv = document.createElement("div");
+          dateDiv.className = "date";
+          dateDiv.innerHTML = dateFormatted;
+          message.appendChild(dateDiv);
 
           var id = document.createElement("div");
           id.className = "arrayId";
@@ -44,6 +48,16 @@
           message.addEventListener("click",showMessage);
           //append message to mailDisplay, on webpage
           mailDisplay.appendChild(message);
+        }
+
+        function formatDate(rawDate) { //format date into something shorter
+          var dateArray = rawDate.toString().split(" ");
+          var date = dateArray[4].slice(0,5);
+
+          for(var i= 1;i<3;i++) {
+            date = date.concat(" ", dateArray[i]);
+          }
+          return date;
         }
 
         function emailSection(string, arrayPos) {  //generate sections of the email
@@ -86,13 +100,9 @@
 
         function refreshInbox() {
           var inboxCounter = document.getElementById("inboxCounter");
-          console.log(typeof inboxCounter);
           if(inboxCounter.innerHTML !== geemails.length) {
             inboxCounter.innerHTML = geemails.length;
-            console.log("different");
-          } else {
-            console.log("same");
-          }
+          } 
         }
 
 
@@ -109,18 +119,17 @@
 		<div class="container" id="main">
       <header>
         <div id="title">
-          <h1> Gee-Mail</h1>
+         <h1 id="geeTitle">げー</h1>
+         <h1 id="mailTitle">Mail</h1>
         </div>
         <div id="inboxCounter">
-          
         </div>
-      </header>
-      
+      </header>    
       <div id="mailDisplay">
       </div>
       <div id="messageDisplay">
         <div id="emailHeader">
-          <img src="" alt="back" id="backButton">
+          <div id="backButton"><</div>
           <p id="emailSubject">you listen</p>
         </div>
         <div id="emailInfo">
@@ -128,14 +137,9 @@
           <div id="emailDate">4/7/2017</div>
         </div>
         <div id="emailContents">
-          
         </div>
-
       </div>
-      
-      <footer>
-        <p>the footer</p>  
-      </footer>
+
 		</div>
 	</body>
 </html>

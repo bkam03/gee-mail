@@ -1,14 +1,22 @@
 body {
-  background-color: violet;
+  background-color: ;
 }
 
 #main {
-
+  display:flex;
+  flex-direction: column;
 }
 
 #title {
-
+  display: flex;
+  align-items: center;
 }
+
+#geeTitle {
+  font-size: 50px;
+}
+
+
 
 #mailDisplay {
   display: flex;
@@ -18,15 +26,53 @@ body {
 .email {
   display: flex;
   border: 1px solid black;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
 }
+
+.sender {
+  min-width: 125px;
+}
+.subject {
+  text-align: left;
+  flex-grow: 1;   
+}
+.date {
+  text-align: left;
+}
+
+.arrayId {
+  display: none;
+}
+
+
 
 #messageDisplay {
   display: none;
+  flex-direction: column;
   border:1px solid black;
+  padding: 15px;
 }
 
 #emailHeader {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: bolder;
+}
 
+#backButton {
+  font-size: 30px;
+  margin-right: 15px;
+}
+
+#emailInfo {
+  display: flex;
+}
+
+#emailSender {
+  margin-right: 25px;
 }
 
 
