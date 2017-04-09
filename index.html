@@ -100,9 +100,15 @@
 
         function refreshInbox() {
           var inboxCounter = document.getElementById("inboxCounter");
-          if(inboxCounter.innerHTML !== geemails.length) {
+          if(Number(inboxCounter.innerHTML) !== geemails.length) {
             inboxCounter.innerHTML = geemails.length;
-          } 
+            inboxCounter.className = "dynamic";
+            console.log("d");
+          } else {
+            inboxCounter.className = "static";
+            console.log("s");
+          }
+          console.log(inboxCounter.className);
         }
 
 
@@ -122,7 +128,7 @@
          <h1 id="geeTitle">げー</h1>
          <h1 id="mailTitle">Mail</h1>
         </div>
-        <div id="inboxCounter">
+        <div id="inboxCounter" class="static">
         </div>
       </header>    
       <div id="mailDisplay">
