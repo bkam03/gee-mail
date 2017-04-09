@@ -29,21 +29,20 @@
         function outputEmail(mailObj, arrayId) { //put together email, put on display
           var message = document.createElement("div");
           message.className = "email";
+          
           var sender = emailSection("sender", mailObj);
           message.appendChild(sender);
+          
           var subject = emailSection("subject", mailObj);
           message.appendChild(subject);
 
           var dateFormatted = formatDate(mailObj.date);
-          var dateDiv = document.createElement("div");
-          dateDiv.className = "date";
-          dateDiv.innerHTML = dateFormatted;
+          var dateDiv = emailSection("date",dateFormatted);
           message.appendChild(dateDiv);
 
-          var id = document.createElement("div");
-          id.className = "arrayId";
-          id.innerHTML = arrayId;
+          var id = emailSection("arrayId", arrayId);
           message.appendChild(id);
+
 
           message.addEventListener("click",showMessage);
           //append message to mailDisplay, on webpage
@@ -60,14 +59,22 @@
           return date;
         }
 
-        function emailSection(string, arrayPos) {  //generate sections of the email
+        function emailSection(string, contents) {  //generate sections of the email
           var section = document.createElement("div");
           section.className = string;
-          section.innerHTML = arrayPos[string];
+          if(typeof contents === "object") {
+            section.innerHTML = contents[string]; 
+          } else {
+            section.innerHTML = contents;
+          }
           return section;
         }
 
         function showMessage() { //display email body when clicked
+          //change message to visited
+          this.className = "emailVisited";
+          console.log(this);
+
           //show email in main window, hide email list
           var messageWindow =document.getElementById("messageDisplay");
           var messageList =document.getElementById("mailDisplay");
@@ -103,12 +110,9 @@
           if(Number(inboxCounter.innerHTML) !== geemails.length) {
             inboxCounter.innerHTML = geemails.length;
             inboxCounter.className = "dynamic";
-            console.log("d");
           } else {
             inboxCounter.className = "static";
-            console.log("s");
           }
-          console.log(inboxCounter.className);
         }
 
 
@@ -128,13 +132,14 @@
          <h1 id="geeTitle">げー</h1>
          <h1 id="mailTitle">Mail</h1>
         </div>
-        <div id="inboxCounter" class="static">
+        <div id="inbox">
+          Inbox(<div id="inboxCounter" class="static"></div>)
         </div>
       </header>    
       <div id="mailDisplay">
       <!-- <div class="email">
-        <div class="sender">Sender</div>
-        <div class="subject">Have You Heard?</div>
+        <div class="sender">Senderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</div>
+        <div class="subject">Have You Heard??????????????? ?????????????????????????????????????????????????????????????? ???????????????????????????????????????????? ????????????????????????????????????????????????????????????????????????????</div>
         <div class="date">03:04 Jan 13</div>
         <div class="arrayId">0</div></div>   -->   
       </div>  
