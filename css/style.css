@@ -37,13 +37,14 @@ height: 50px;
     font-size: 100%;
   }
   to {color: red; 
-    font-size: 200% ;
+    font-size: 300% ;
+    opacity: .1;
   }
 }
 
 .dynamic {
   animation-name: inboxC;
-  animation-duration: 800ms;
+  animation-duration: 1300ms;
 }
 
 

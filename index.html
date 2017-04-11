@@ -73,7 +73,6 @@
         function showMessage() { //display email body when clicked
           //change message to visited
           this.className = "emailVisited";
-          console.log(this);
 
           //show email in main window, hide email list
           var messageWindow =document.getElementById("messageDisplay");
@@ -106,10 +105,16 @@
         }
 
         function refreshInbox() {
+
+          var unreadEmail = document.getElementsByClassName("email").length;
+
           var inboxCounter = document.getElementById("inboxCounter");
-          if(Number(inboxCounter.innerHTML) !== geemails.length) {
-            inboxCounter.innerHTML = geemails.length;
+          if(Number(inboxCounter.innerHTML) < unreadEmail) {
+            inboxCounter.innerHTML = unreadEmail;
             inboxCounter.className = "dynamic";
+          } else if(inboxCounter.innerHTML > unreadEmail) {
+            inboxCounter.innerHTML = unreadEmail;
+            inboxCounter.className = "static";
           } else {
             inboxCounter.className = "static";
           }
@@ -119,8 +124,8 @@
 
 //functions being called
         loadPage(geemails);
-        setInterval(newMessage,6000); //generate new email at set intervals
-        setInterval(refreshInbox,1000); //refresh inbox counter
+        setInterval(newMessage,8000); //generate new email at set intervals
+        setInterval(refreshInbox,500); //refresh inbox counter
         
       };
     </script>
