@@ -4,7 +4,7 @@
 		<link href="css/style.css" rel="stylesheet" media="screen">
     <script>
       window.onload = function(){
-
+        var emailIdNum = 0;
         function loadPage(array) {
           for(var i=0; i<geemails.length;i++) {//go through email array
             outputEmail(array[i],i);  ////create email line
@@ -26,7 +26,7 @@
 
         }
 
-        function outputEmail(mailObj, arrayId) { //put together email, put on display
+        function outputEmail(mailObj,arrayPos) { //put together email, put on display
           var message = document.createElement("div");
           message.className = "email";
           
@@ -40,8 +40,18 @@
           var dateDiv = emailSection("date",dateFormatted);
           message.appendChild(dateDiv);
 
-          var id = emailSection("arrayId", arrayId);
+          var id = emailSection("arrayId", emailIdNum);
           message.appendChild(id);
+
+          //attach email id to message in geemails array
+          geemails[arrayPos].emailId = emailIdNum;
+
+          emailIdNum++;
+
+
+          var deleteButton = emailSection("deleteButton", "X");
+          deleteButton.addEventListener("click", deleteEmail);
+          message.appendChild(deleteButton);
 
 
           message.addEventListener("click",showMessage);
@@ -85,8 +95,19 @@
           var subject = this.querySelector(".subject").innerHTML;
           var sender = this.querySelector(".sender").innerHTML;
           var date = this.querySelector(".date").innerHTML;
-          var bodyId = this.querySelector(".arrayId").innerHTML;
-          var body = geemails[bodyId].body;
+          var bodyId = Number(this.querySelector(".arrayId").innerHTML);
+          var body = "";
+          //geemails[bodyId].body;
+          
+          for(var i=0;i<geemails.length;i++) {//find email in geemails array and extract body
+
+            /*console.log("finding body",geemails[i].emailId, bodyId);
+            console.log(typeof geemails[i].emailId, typeof bodyId);*/
+            if(geemails[i].emailId === bodyId) { //if ids match, extract body text
+              body = geemails[i].body;
+              break;
+            }
+          }
 
           //display email in appropriate window
           document.getElementById("emailSubject").innerHTML = subject;
@@ -95,12 +116,39 @@
           document.getElementById("emailContents").innerHTML = body;
         }
 
+        function deleteEmail() { //delete email off screen and off geemails array
+          var currentEmail = this.parentNode; //onscreen email location
+          var id = Number(currentEmail.querySelector(".arrayId").innerHTML); //email id, to find in geemails array, converted to number
+          //console.log(currentEmail, id);
+          for(var i=0;i<geemails.length;i++) { //find correct geemail in array
+            if(geemails[i].emailId === id ) {
+              var geemailsEmailPos = i;
+              break;
+            }
+          }
+          geemails.splice(i,1);  //remove email from geemail array
+
+          var emailList = main.querySelectorAll(".email, .emailVisited");
+          console.log(emailList);
+          for(var i = 0; i < emailList.length; i++) {//find correct email on page
+            //console.log(emailList[i].querySelector(".arrayId").innerHTML);
+            if(Number(emailList[i].querySelector(".arrayId").innerHTML) === id) {
+              var emailLocation = i;
+              break;
+            }
+          }
+          //remove email from page
+          mailDisplay.removeChild(emailList[emailLocation]);
+          console.log(geemails);
+
+        }
+
 
         function newMessage() {  //generate new email?
           var message = getNewMessage(); //generate email
           //console.log("message",message); //check contents
           geemails.push(message); //add new email to end of geemails array
-          outputEmail(message,(geemails.length - 1));
+          outputEmail(message,geemails.length - 1);
           //console.log(geemails.length); //how many emails now?
         }
 
@@ -118,6 +166,7 @@
           } else {
             inboxCounter.className = "static";
           }
+          //console.log("emailIdNum:" + emailIdNum,"\ngeemailLength:" + geemails.length);
         }
 
 

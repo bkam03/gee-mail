@@ -67,6 +67,7 @@ height: 50px;
   background-color: #E3E3E3;
 }
 
+
 .email:hover, .emailVisited:hover {
   background-color: #73D3F4;
 }
@@ -90,7 +91,17 @@ height: 50px;
 
 .arrayId {
   margin-left: 10px;
-  display: none;
+  display: none; 
+}
+
+.deleteButton {
+  width: 30px;
+  font-size: 25px;
+  text-align: center;
+  line-height: 40px;
+  background-color: grey;
+  margin: -10px -10px -10px 10px;
+  height: 40px;
 }
 
 
