@@ -71,9 +71,16 @@ height: 50px;
 .email:hover, .emailVisited:hover {
   background-color: #73D3F4;
 }
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  align-items: center;
+
+}
 
 .sender {
-  min-width: 140px;
+  width: 140px;
   word-wrap: break-word;
 
 }
@@ -99,11 +106,15 @@ height: 50px;
   font-size: 25px;
   text-align: center;
   line-height: 40px;
-  background-color: grey;
+  background-color: snow;
   margin: -10px -10px -10px 10px;
   height: 40px;
 }
 
+.deleteButton:hover {
+  background-color: #73D3F4;
+  
+}
 
 
 #messageDisplay {
@@ -130,7 +141,6 @@ height: 50px;
 #backButton:hover {
   background-color: #73D3F4;
   
-}
 
 #emailInfo {
   display: flex;

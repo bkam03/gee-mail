@@ -29,19 +29,23 @@
         function outputEmail(mailObj,arrayPos) { //put together email, put on display
           var message = document.createElement("div");
           message.className = "email";
+
+          var content = document.createElement("div");
+          content.className = "content";
+          message.appendChild(content);
           
           var sender = emailSection("sender", mailObj);
-          message.appendChild(sender);
+          content.appendChild(sender);
           
           var subject = emailSection("subject", mailObj);
-          message.appendChild(subject);
+          content.appendChild(subject);
 
           var dateFormatted = formatDate(mailObj.date);
           var dateDiv = emailSection("date",dateFormatted);
-          message.appendChild(dateDiv);
+          content.appendChild(dateDiv);
 
           var id = emailSection("arrayId", emailIdNum);
-          message.appendChild(id);
+          content.appendChild(id);
 
           //attach email id to message in geemails array
           geemails[arrayPos].emailId = emailIdNum;
@@ -54,7 +58,7 @@
           message.appendChild(deleteButton);
 
 
-          message.addEventListener("click",showMessage);
+          content.addEventListener("click",showMessage);
           //append message to mailDisplay, on webpage
           mailDisplay.appendChild(message);
         }
@@ -82,7 +86,7 @@
 
         function showMessage() { //display email body when clicked
           //change message to visited
-          this.className = "emailVisited";
+          this.parentNode.className = "emailVisited";
 
           //show email in main window, hide email list
           var messageWindow =document.getElementById("messageDisplay");
@@ -119,7 +123,6 @@
         function deleteEmail() { //delete email off screen and off geemails array
           var currentEmail = this.parentNode; //onscreen email location
           var id = Number(currentEmail.querySelector(".arrayId").innerHTML); //email id, to find in geemails array, converted to number
-          //console.log(currentEmail, id);
           for(var i=0;i<geemails.length;i++) { //find correct geemail in array
             if(geemails[i].emailId === id ) {
               var geemailsEmailPos = i;
@@ -129,9 +132,7 @@
           geemails.splice(i,1);  //remove email from geemail array
 
           var emailList = main.querySelectorAll(".email, .emailVisited");
-          console.log(emailList);
           for(var i = 0; i < emailList.length; i++) {//find correct email on page
-            //console.log(emailList[i].querySelector(".arrayId").innerHTML);
             if(Number(emailList[i].querySelector(".arrayId").innerHTML) === id) {
               var emailLocation = i;
               break;
@@ -139,17 +140,13 @@
           }
           //remove email from page
           mailDisplay.removeChild(emailList[emailLocation]);
-          console.log(geemails);
-
         }
 
 
         function newMessage() {  //generate new email?
           var message = getNewMessage(); //generate email
-          //console.log("message",message); //check contents
           geemails.push(message); //add new email to end of geemails array
           outputEmail(message,geemails.length - 1);
-          //console.log(geemails.length); //how many emails now?
         }
 
         function refreshInbox() {
@@ -166,7 +163,7 @@
           } else {
             inboxCounter.className = "static";
           }
-          //console.log("emailIdNum:" + emailIdNum,"\ngeemailLength:" + geemails.length);
+          console.log("emailsonPage:" + document.querySelectorAll(".email, .emailVisited").length,"\ngeemailLength:" + geemails.length);
         }
 
 
